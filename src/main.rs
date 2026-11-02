@@ -27,7 +27,9 @@ fn main() {
     for (i, message) in text.split(',').enumerate() {
         let input = bytes(message);
         let result = match panic::catch_unwind(|| format!("{:?}", agent_wire::parse(&input))) {
-            Ok(r) if r.chars().count() > 80 => format!("{}…", r.chars().take(80).collect::<String>()),
+            Ok(r) if r.chars().count() > 80 => {
+                format!("{}…", r.chars().take(80).collect::<String>())
+            }
             Ok(r) => r,
             Err(_) => "CRASH (panic)".to_string(),
         };
